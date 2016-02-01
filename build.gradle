@@ -75,7 +75,7 @@ subprojects {
     apply plugin: 'maven'
 
     ext {
-        springVersion = '4.2.3.RELEASE'
+        springVersion = '4.2.4.RELEASE'
     }
 
     uploadArchives {
