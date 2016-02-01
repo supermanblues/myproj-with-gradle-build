@@ -10,25 +10,14 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
 
 war {
-    baseName = 'demo'
+    baseName = 'myproj'
     version = '0.0.1-SNAPSHOT'
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenLocal()
-    maven { url 'http://xlab-tech.com:45682/nexus/content/groups/public/' }
-    mavenCentral()
-    jcenter()
 }
 
 configurations {
@@ -58,14 +47,9 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
 }
 
-subprojects {
+allprojects {
 
     apply plugin: 'java'
-    apply plugin: 'maven'
-
-    ext {
-        springVersion = '4.2.3.RELEASE'
-    }
 
     group = 'com.wonders.xlab.myproj'
     version = '0.0.1-SNAPSHOT'
@@ -78,6 +62,20 @@ subprojects {
         maven { url 'http://xlab-tech.com:45682/nexus/content/groups/public/' }
         mavenCentral()
         jcenter()
+    }
+
+    configurations {
+        all*.exclude group: 'commons-logging'
+    }
+
+}
+
+subprojects {
+
+    apply plugin: 'maven'
+
+    ext {
+        springVersion = '4.2.3.RELEASE'
     }
 
     uploadArchives {
@@ -95,9 +93,13 @@ subprojects {
 
     dependencies {
 
-        compile 'org.apache.commons:commons-lang3:3.4'
+        compile 'org.slf4j:slf4j-api:1.7.14',
+                'org.apache.commons:commons-lang3:3.4'
 
         testCompile 'junit:junit:4.12'
     }
 
 }
+
+
+
